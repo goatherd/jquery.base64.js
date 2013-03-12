@@ -120,4 +120,19 @@
         coded = coded.join('');
         return Plugin.raw === false || Plugin.utf8decode || utf8decode ? UTF8.decode(coded) : coded;
     };
+    
+    Plugin.rot13 = function(codes) {
+        return codes.replace(
+            /[a-zA-Z]/g,
+            function(c) { return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26); }
+        );
+    }
+
+    Plugin.rot13Encode = function(codes, utf8decode) {
+        return Plugin.rot13(Plugin.encode(codes, utf8decode));
+    }
+    
+    Plugin.rot13Decode = function(codes, utf8decode) {
+        return Plugin.decode(Plugin.rot13(codes), utf8decode);
+    }    
 }(jQuery));
